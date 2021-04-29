@@ -22,7 +22,7 @@ class AdsDetailsCrawlerObserver extends CrawlObserver
             (string)$response->getBody()
         );
 
-        $imageElement = $domCrawler->filter('div.pagAnuFoto img');
+        $imageElement = $domCrawler->filter('div.pagAnuFoto img, img.sui-ImageSlider-image');
         if ($imageElement->count() > 0) {
             $image = $imageElement->attr('src');
             echo "Image found! $image\n";
