@@ -6,7 +6,7 @@
             :src="ad.image"
         ></v-img>
 
-        <v-card-title class="d-inline-block text-truncate" style="max-width: 100%;">
+        <v-card-title class="d-inline-block text-truncate" style="max-width: 90%;">
             {{ ad.title }}
         </v-card-title>
 
@@ -15,15 +15,13 @@
                 Precio: {{ ad.price }} €
             </div>
 
-            <div v-if="ad.price!=null"class="subtitle-1">
+            <div v-if="ad.price!=null" class="subtitle-1">
                 Ubicación: {{ ad.location }}
             </div>
 
-            <div class="product-description">
-                <span>
-                    {{ ad.description.substring(0, 144)}}...
-                </span>
-            </div>
+            <span>
+                {{ ad.description.substring(0, 144)}}...
+            </span>
 
             <v-chip-group>
                 <v-chip v-for="tag in ad.tags" key="tag">{{ tag }}</v-chip>
@@ -54,15 +52,3 @@ export default {
     methods: {},
 }
 </script>
-
-<style>
-/*.product-description span{
-    max-height: 150px;
-    width: 90%;
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-    display: inline-block;
-    text-overflow: ellipsis;
-}*/
-</style>
