@@ -16,6 +16,7 @@ class CreateAdSubcategoriesTable extends Migration
         Schema::create('ad_subcategories', function (Blueprint $table) {
             $table->id();
             $table->string('name', 60);
+            $table->string('url', 120);
             $table->foreignId('category_id')->references('id')->on('ad_categories')->restrictOnDelete();
         });
     }

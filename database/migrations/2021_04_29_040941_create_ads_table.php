@@ -18,11 +18,13 @@ class CreateAdsTable extends Migration
             $table->string('title');
             $table->integer('price');
             $table->text('description');
+            $table->integer('reference');
             $table->integer('views')->default(0);
             $table->string('publisher_name');
             $table->boolean('free_shipping');
             $table->foreignId('subcategory_id')->references('id')->on('ad_subcategories')->restrictOnDelete();
             $table->foreignId('province_id')->references('id')->on('communities')->restrictOnDelete();
+            $table->string('url', 160);
             $table->timestamps();
         });
     }

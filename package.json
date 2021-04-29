@@ -26,6 +26,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "puppeteer": "^9.0.0",
         "vuetify": "^2.4.11"
     }
 }

@@ -16,7 +16,7 @@ class CreateAdCategoriesTable extends Migration
         Schema::create('ad_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name', 40);
-            $table->string('icon', 20);
+            $table->string('icon', 160);
         });
     }
 
