@@ -25,7 +25,7 @@ class AdsCrawlerService
     {
         AdCategory::all()->each(function ($category) {
             echo "Dispatching category {$category->name}\n";
-            ScrapeAdsSubcategoryJob::dispatchSync($category);
+            ScrapeAdsSubcategoryJob::dispatch($category);
         });
     }
 

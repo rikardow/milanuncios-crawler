@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ad;
+use App\Models\AdCategory;
 use Illuminate\Http\Request;
 
 class AdDetailsController extends Controller
@@ -21,8 +23,10 @@ class AdDetailsController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(int $id)
     {
-        return view('details');
+        $ad = Ad::findOrFail($id);
+        $categories = AdCategory::all();
+        return view('details', ['ad' => $ad, 'categories' => $categories]);
     }
 }

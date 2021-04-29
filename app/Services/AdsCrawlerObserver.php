@@ -79,7 +79,7 @@ class AdsCrawlerObserver extends CrawlObserver
             );
 
             if ($image == null) {
-                ScrapeArticleDetails::dispatchSync($ad);
+                ScrapeArticleDetails::dispatch($ad);
             }
         });
     }
