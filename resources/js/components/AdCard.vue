@@ -1,6 +1,7 @@
 <template>
     <v-card class="mt-4" height="550" :href="'/details/' + ad.id">
         <v-img
+            v-if="ad.image!=null"
             height="250"
             :src="ad.image"
         ></v-img>
@@ -8,11 +9,15 @@
         <v-card-title>{{ ad.title }}</v-card-title>
 
         <v-card-text>
-            <div class="my-4 subtitle-1">
-                {{ ad.price }} € - {{ ad.location }}
+            <div v-if="ad.price!=null" class="my-4 subtitle-1">
+                Precio: {{ ad.price }} €
             </div>
 
-            <span style="text-overflow: ellipsis">{{ ad.description }}</span>
+            <div v-if="ad.price!=null"class="my-4 subtitle-1">
+                Ubicación: {{ ad.location }}
+            </div>
+
+            <span class="item-description">{{ ad.description }}</span>
 
             <v-chip-group>
                 <v-chip v-for="tag in ad.tags" key="tag">{{ tag }}</v-chip>
@@ -43,3 +48,9 @@ export default {
     methods: {},
 }
 </script>
+
+<style lang="scss">
+.product-description{
+    text-overflow: hidden;
+}
+</style>

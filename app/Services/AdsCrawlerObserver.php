@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\ScrapeArticleDetails;
 use App\Models\Ad;
 use App\Models\AdCategory;
 use Spatie\Crawler\CrawlObservers\CrawlObserver;
@@ -50,7 +51,7 @@ class AdsCrawlerObserver extends CrawlObserver
             $description = $adTile->filter('div.aditem-detail > div.tx')->text();
             $freeShipping = $adTile->filter('span.ma-AdCard-metadataTag--shippable')->count() > 0;
 
-            $imageElement = $adTile->filter('div.aditem-image img');
+            $imageElement = $adTile->filter('div.aditem-image img, img.ef');
             $image = null;
             if ($imageElement->count() > 0) {
                 $image = $imageElement->attr('src');
@@ -62,7 +63,7 @@ class AdsCrawlerObserver extends CrawlObserver
                 $tags[] = $tag->text();
             });
 
-            Ad::firstOrCreate(
+            $ad = Ad::firstOrCreate(
                 ['reference' => $reference],
                 [
                     'title' => $title,
@@ -76,6 +77,10 @@ class AdsCrawlerObserver extends CrawlObserver
                     'category_id' => $this->category->id
                 ]
             );
+
+            if ($image == null) {
+                ScrapeArticleDetails::dispatchSync($ad);
+            }
         });
     }
 

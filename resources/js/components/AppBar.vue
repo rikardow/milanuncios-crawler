@@ -7,12 +7,12 @@
         <v-spacer></v-spacer>
 
         <div v-if="user === undefined">
-            <v-btn href="login" rounded small class="mr-2">
+            <v-btn href="/login" rounded small class="mr-2">
                 Login
                 <v-icon right small>mdi-account</v-icon>
             </v-btn>
 
-            <v-btn href="register" rounded small>
+            <v-btn href="/register" rounded small>
                 Registro
                 <v-icon right small>mdi-login</v-icon>
             </v-btn>
