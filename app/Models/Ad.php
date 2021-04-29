@@ -10,4 +10,9 @@ class Ad extends Model
     protected $guarded = [];
 
     use HasFactory;
+
+    public static function getRecent()
+    {
+        return self::orderBy('id', 'desc')->take(10)->get();
+    }
 }
