@@ -4,59 +4,53 @@
             <a href="/">{{ title }}</a>
         </v-app-bar-title>
 
-        <!--v-text-field
-            prepend-inner-icon="mdi-magnify"
-            v-model="searchText"
-            dense flat
-            clearable
-            single-line
-            outlined
-        /-->
-
         <v-spacer></v-spacer>
 
-        <v-btn href="login" rounded small class="mr-2">
-            Login
-            <v-icon right small>mdi-heart</v-icon>
-        </v-btn>
+        <div v-if="user === undefined">
+            <v-btn href="login" rounded small class="mr-2">
+                Login
+                <v-icon right small>mdi-account</v-icon>
+            </v-btn>
 
-        <v-btn href="register" rounded small>
-            Registro
-            <v-icon right small>mdi-magnify</v-icon>
-        </v-btn>
+            <v-btn href="register" rounded small>
+                Registro
+                <v-icon right small>mdi-login</v-icon>
+            </v-btn>
+        </div>
 
-        <li v-if="user != ''" class="nav-item dropdown">
-            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                {{ user.name }}
-            </a>
+        <div v-else>
+            <span class="mr-8">{{ user.name }}</span>
 
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="logout"
-                   @click="event.preventDefault();
-                   document.getElementById('logout-form').submit();">
-                    Salir
-                </a>
-
+            <v-btn icon @click="logout">
+                Salir
+                <v-icon right class="mx-1">mdi-logout</v-icon>
                 <form id="logout-form" action="logout" method="POST" class="d-none">
                     @csrf
                 </form>
+            </v-btn>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             </div>
-        </li>
+        </div>
     </v-app-bar>
 </template>
 
 <script>
 export default {
     props: ['title', 'user'],
-    data() {
-        return {
-            searchText: '',
-        };
-    },
-    mounted() {
-        console.log('user', this.user);
-        console.log('AppBar mounted.')
+    data: () => ({
+        csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+    }),
+    methods: {
+        logout() {
+            axios.post('/logout', {_token: this.csrf})
+                .then(function (response) {
+                    window.location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
     }
 }
 </script>

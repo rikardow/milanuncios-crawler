@@ -23,7 +23,7 @@
 <div id="app">
     <v-app>
         <v-container>
-            <app-bar user="{{ Auth::user() }}" title="{{config('app.name')}}"></app-bar>
+            <app-bar :user="{{ Auth::user() ?? 'undefined' }}" title="{{config('app.name')}}"></app-bar>
             @yield('content')
         </v-container>
     </v-app>

@@ -39,7 +39,7 @@
                     color="success"
                     @click="submit"
                 >
-                    Validate
+                    Buscar
                 </v-btn>
             </v-col>
         </v-row>
@@ -53,7 +53,7 @@ export default {
         valid: true,
         search: '',
         searchRules: [
-            v => !!v || 'Busqueda requerida',
+            v => !!v && v.trim() !== '' || 'Busqueda requerida',
         ],
         selectedCategory: 'all',
         freeShipping: false,

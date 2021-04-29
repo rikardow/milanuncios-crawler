@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mt-4" height="550">
+    <v-card class="mt-4" height="550" :href="'/details/' + ad.id">
         <v-img
             height="250"
             :src="ad.image"
