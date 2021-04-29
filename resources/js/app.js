@@ -27,6 +27,7 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  */
 
 import Vuetify from 'vuetify'
+
 Vue.use(Vuetify);
 
 const app = new Vue({

@@ -38,7 +38,7 @@ class CrawlAdsCommand extends Command
      */
     public function handle(): int
     {
-        AdsCrawlerService::scrapCategoriesAds();
+        AdsCrawlerService::dispatchScrapeSubcategoriesJobs();
         return 0;
     }
 }

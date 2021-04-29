@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\AdSubcategory;
 use App\Services\AdsCrawlerObserver;
+use App\Services\AdsCrawlerService;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -34,10 +35,8 @@ class ScrapeAdsSubcategoryJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Crawler $crawler, AdsCrawlerObserver $crawlerObserver)
+    public function handle()
     {
-        $crawler::create([RequestOptions::HTTP_ERRORS => false])
-            ->setCrawlObserver($crawlerObserver)
-            ->startCrawling($this->subcategory->url);
+        AdsCrawlerService::scrapeSubcategory($this->subcategory);
     }
 }

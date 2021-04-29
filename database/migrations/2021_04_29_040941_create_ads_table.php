@@ -16,14 +16,16 @@ class CreateAdsTable extends Migration
         Schema::create('ads', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('price');
+            $table->integer('price')->nullable();
             $table->text('description');
             $table->integer('reference');
             $table->integer('views')->default(0);
-            $table->string('publisher_name');
+            $table->string('publisher_name', 60)->nullable();
+            $table->string('location', 60)->nullable();
+            $table->json('images');
+            $table->json('tags');
             $table->boolean('free_shipping');
             $table->foreignId('subcategory_id')->references('id')->on('ad_subcategories')->restrictOnDelete();
-            $table->foreignId('province_id')->references('id')->on('communities')->restrictOnDelete();
             $table->string('url', 160);
             $table->timestamps();
         });
