@@ -17,6 +17,7 @@ class CreateAdCategoriesTable extends Migration
             $table->id();
             $table->string('name', 40);
             $table->string('icon', 160);
+            $table->string('url', 120);
         });
     }
 

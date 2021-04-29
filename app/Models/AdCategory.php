@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AdCategory extends Model
 {
-    protected $fillable = ['name', 'icon'];
+    protected $guarded = [];
     public $timestamps = false;
 
     use HasFactory;

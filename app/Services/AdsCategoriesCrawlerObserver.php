@@ -21,8 +21,13 @@ class AdsCategoriesCrawlerObserver extends CrawlObserver
             echo "Current category $categoryName\n";
 
             $categoryTitle = $categorySection->filter('div.cat1Item > a')->attr('title');
+            $categoryUrl = $categorySection->filter('div.cat1Item > a')->attr('href');
             $categoryIcon = $domCrawler->filter("img[alt*=\"$categoryTitle\"]")->attr('src');
-            $category = AdCategory::firstOrCreate(['name' => $categoryName], ['icon' => $categoryIcon]);
+
+            $category = AdCategory::firstOrCreate(
+                ['name' => $categoryName],
+                ['icon' => $categoryIcon, 'url' => "https://www.milanuncios.com" . $categoryUrl]
+            );
 
             $categorySection->filter('div.cat2Item > a')->each(function ($subCategory) use ($category) {
                 $subcategoryName = $subCategory->text();

@@ -22,10 +22,10 @@ class CreateAdsTable extends Migration
             $table->integer('views')->default(0);
             $table->string('publisher_name', 60)->nullable();
             $table->string('location', 60)->nullable();
-            $table->json('images');
+            $table->text('image')->nullable();
             $table->json('tags');
             $table->boolean('free_shipping');
-            $table->foreignId('subcategory_id')->references('id')->on('ad_subcategories')->restrictOnDelete();
+            $table->foreignId('category_id')->references('id')->on('ad_categories')->restrictOnDelete();
             $table->string('url', 160);
             $table->timestamps();
         });

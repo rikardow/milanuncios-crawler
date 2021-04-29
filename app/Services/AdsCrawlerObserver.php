@@ -3,17 +3,17 @@
 namespace App\Services;
 
 use App\Models\Ad;
-use App\Models\AdSubcategory;
+use App\Models\AdCategory;
 use Spatie\Crawler\CrawlObservers\CrawlObserver;
 use Symfony\Component\DomCrawler\Crawler;
 
 class AdsCrawlerObserver extends CrawlObserver
 {
-    protected $subcategory;
+    protected $category;
 
-    public function __construct(AdSubcategory $subcategory)
+    public function __construct(AdCategory $category)
     {
-        $this->subcategory = $subcategory;
+        $this->category = $category;
     }
 
     public function crawled($url, $response, $foundOnUrl = null)
@@ -22,37 +22,43 @@ class AdsCrawlerObserver extends CrawlObserver
             (string)$response->getBody()
         );
 
-        $domCrawler->filter('div.ma-AdList article.ma-AdCard')->each(function ($adTile) {
-            $reference = $adTile->filter('p.ma-AdCard-adId')->text();
+        $domCrawler->filter('div.aditem')->each(function ($adTile) {
+            $reference = $adTile->filter('div.aditem-header > .x5')->text();
             $reference = ltrim($reference, 'r');
 
-            $url = $adTile->filter('h2.ma-AdCard-title-text > a')->attr('href');
+            $url = $adTile->filter('a.aditem-detail-title')->attr('href');
+            $url = "https://www.milanuncios.com/" . $url;
 
             echo "Current Ad reference $reference with url $url\n";
 
-            $title = $adTile->filter('h2.ma-AdCard-title-text > a')->text();
-            $location = $adTile->filter('span.ma-AdCard-location')->text();
+            $title = $adTile->filter('a.aditem-detail-title')->text();
+            $locationElement = $adTile->filter('div.list-location-region');
 
-            $priceElement = $adTile->filter('span.ma-AdCard-price-value');
+            $location = null;
+            if ($locationElement->count() > 0) {
+                $location = $locationElement->text();
+            }
+
+            $priceElement = $adTile->filter('div.aditem-price');
             $price = null;
 
             if ($priceElement->count() > 0) {
-                $price = $adTile->filter('span.ma-AdCard-price-value')->text();
+                $price = $priceElement->text();
                 $price = str_replace(['€', '.'], '', $price);
             }
 
-            $description = $adTile->filter('p.ma-AdCardDescription-text')->text();
+            $description = $adTile->filter('div.aditem-detail > div.tx')->text();
             $freeShipping = $adTile->filter('span.ma-AdCard-metadataTag--shippable')->count() > 0;
 
-            $pictureElement = $adTile->filter('figure.ma-AdCard-photoContainer > img');
-            $pictures = [];
-            if ($pictureElement->count() > 0) {
-                $pictures[] = $pictureElement->attr('src');
+            $imageElement = $adTile->filter('div.aditem-image img');
+            $image = null;
+            if ($imageElement->count() > 0) {
+                $image = $imageElement->attr('src');
             }
 
             $tags = [];
 
-            $adTile->filter('span.ma-AdTag-label')->each(function ($tag) use (&$tags) {
+            $adTile->filter('div.tag-mobile')->each(function ($tag) use (&$tags) {
                 $tags[] = $tag->text();
             });
 
@@ -66,8 +72,8 @@ class AdsCrawlerObserver extends CrawlObserver
                     'url' => $url,
                     'location' => $location,
                     'tags' => json_encode($tags),
-                    'images' => json_encode($pictures),
-                    'subcategory_id' => $this->subcategory->id
+                    'image' => $image,
+                    'category_id' => $this->category->id
                 ]
             );
         });

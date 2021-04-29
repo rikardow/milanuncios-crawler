@@ -3,9 +3,8 @@
 namespace App\Services;
 
 use App\Jobs\ScrapeAdsSubcategoryJob;
-use App\Models\AdSubcategory;
+use App\Models\AdCategory;
 use GuzzleHttp\RequestOptions;
-use Spatie\Browsershot\Browsershot;
 use Spatie\Crawler\Crawler;
 
 class AdsCrawlerService
@@ -23,21 +22,20 @@ class AdsCrawlerService
 
     public static function dispatchScrapeSubcategoriesJobs()
     {
-        AdSubcategory::all()->each(function ($subcategory) {
-            echo "Dispatching subcategory {$subcategory->name}\n";
-            ScrapeAdsSubcategoryJob::dispatchSync($subcategory);
+        AdCategory::all()->each(function ($category) {
+            echo "Dispatching category {$category->name}\n";
+            ScrapeAdsSubcategoryJob::dispatchSync($category);
         });
     }
 
-    public static function scrapeSubcategory($subcategory)
+    public static function scrapeCategory($category)
     {
         Crawler::create([RequestOptions::HTTP_ERRORS => false])
-            ->setCrawlFulfilledHandlerClass(AdsCrawlerFulfilledHandler::class)
-            ->setCrawlObserver(new AdsCrawlerObserver($subcategory))
+            ->setCrawlObserver(new AdsCrawlerObserver($category))
             ->setMaximumDepth(0)
-            ->startCrawling($subcategory->url);
+            ->startCrawling($category->url);
 
-        echo "\nFinished subcategory {$subcategory->name}\n\n";
+        echo "\nFinished Category {$category->name}\n\n";
     }
 }
 

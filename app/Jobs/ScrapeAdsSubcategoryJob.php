@@ -2,32 +2,28 @@
 
 namespace App\Jobs;
 
-use App\Models\AdSubcategory;
-use App\Services\AdsCrawlerObserver;
+use App\Models\AdCategory;
 use App\Services\AdsCrawlerService;
-use GuzzleHttp\RequestOptions;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Spatie\Crawler\Crawler;
 
 class ScrapeAdsSubcategoryJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $subcategory;
+    protected $category;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(AdSubcategory $subcategory)
+    public function __construct(AdCategory $category)
     {
-        $this->subcategory = $subcategory;
+        $this->category = $category;
     }
 
     /**
@@ -37,6 +33,6 @@ class ScrapeAdsSubcategoryJob implements ShouldQueue
      */
     public function handle()
     {
-        AdsCrawlerService::scrapeSubcategory($this->subcategory);
+        AdsCrawlerService::scrapeCategory($this->category);
     }
 }
