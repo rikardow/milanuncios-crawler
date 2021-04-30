@@ -25,7 +25,7 @@
                 ></v-select>
             </v-col>
 
-            <v-col cols="4" md="2">
+            <v-col cols="4" offset="2" offset-md="0" md="2">
                 <v-checkbox
                     v-model="freeShipping"
                     label="Envio gratis"
