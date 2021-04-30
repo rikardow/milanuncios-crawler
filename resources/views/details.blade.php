@@ -10,7 +10,7 @@
 </v-row>
 
 <v-row>
-    <v-col cols="8" offset="2">
+    <v-col cols="12" md="8" offset-md="2">
         <ad-card :ad="{{ $ad }}" :expand="true">
 
         </ad-card>

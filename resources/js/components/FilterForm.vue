@@ -5,7 +5,7 @@
         lazy-validation
     >
         <v-row>
-            <v-col cols="4">
+            <v-col cols="6" md="4">
                 <v-text-field
                     v-model="search"
                     :rules="searchRules"
@@ -14,7 +14,7 @@
                 ></v-text-field>
             </v-col>
 
-            <v-col cols="4">
+            <v-col cols="6" md="4">
                 <v-select
                     v-model="selectedCategory"
                     :items="categories"
@@ -25,7 +25,7 @@
                 ></v-select>
             </v-col>
 
-            <v-col cols="2">
+            <v-col cols="4" md="2">
                 <v-checkbox
                     v-model="freeShipping"
                     label="Envio gratis"
@@ -33,7 +33,7 @@
                 ></v-checkbox>
             </v-col>
 
-            <v-col cols="2" align-self="center">
+            <v-col cols="4" md="2" align-self="center">
                 <v-btn
                     :disabled="!valid"
                     color="success"

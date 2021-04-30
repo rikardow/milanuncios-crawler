@@ -19,7 +19,7 @@ class CrawlAdsCategoriesCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Scrape all the ad categories and populate the database';
 
     /**
      * Create a new command instance.

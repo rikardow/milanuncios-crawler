@@ -26,10 +26,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // Task to populate the categories and subcategories if theres something new
         $schedule->command(CrawlAdsCategoriesCommand::class)->daily();
+
+        // Task to search for new ads in all categories
         $schedule->command(CrawlAdsCommand::class)->everyThirtyMinutes();
+
+        // Run the queue
         $schedule->command('queue:work --stop-when-empty')->everyFifteenMinutes();
-        // $schedule->command('inspire')->hourly();
     }
 
     /**

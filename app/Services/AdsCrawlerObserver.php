@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Jobs\ScrapeArticleDetails;
 use App\Models\Ad;
 use App\Models\AdCategory;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 use Spatie\Crawler\CrawlObservers\CrawlObserver;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -12,12 +14,23 @@ class AdsCrawlerObserver extends CrawlObserver
 {
     protected $category;
 
+    /**
+     * AdsCrawlerObserver constructor.
+     * @param AdCategory $category Inject the category to use the id later
+     */
     public function __construct(AdCategory $category)
     {
         $this->category = $category;
     }
 
-    public function crawled($url, $response, $foundOnUrl = null)
+    /**
+     * Once we have the response parse the body and save the data in a new row in the db
+     *
+     * @param UriInterface $url
+     * @param ResponseInterface $response
+     * @param null $foundOnUrl
+     */
+    public function crawled(UriInterface $url, ResponseInterface $response, $foundOnUrl = null)
     {
         $domCrawler = new Crawler(
             (string)$response->getBody()

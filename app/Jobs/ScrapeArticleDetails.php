@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Models\Ad;
 use App\Services\AdsCrawlerService;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -18,9 +17,8 @@ class ScrapeArticleDetails implements ShouldQueue
     protected $ad;
 
     /**
-     * Create a new job instance.
-     *
-     * @return void
+     * Job created to scrape an ad details page
+     * @param Ad $ad The ad to scrape
      */
     public function __construct(Ad $ad)
     {
@@ -28,7 +26,7 @@ class ScrapeArticleDetails implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Execute the job and scrape more data from the details page
      *
      * @return void
      */

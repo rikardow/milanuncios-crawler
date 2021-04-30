@@ -18,7 +18,7 @@ class ScrapeAdsSubcategoryJob implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
+     * @param AdCategory $category the category to scrape
      * @return void
      */
     public function __construct(AdCategory $category)
@@ -27,7 +27,7 @@ class ScrapeAdsSubcategoryJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Execute the job and scrape the category in search for related ads
      *
      * @return void
      */

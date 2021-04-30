@@ -11,7 +11,7 @@
 
 <v-row>
     @forelse($results as $ad)
-    <v-col cols="4">
+    <v-col cols="12" md="6" lg="4">
         <ad-card :ad="{{ $ad }}">
 
         </ad-card>

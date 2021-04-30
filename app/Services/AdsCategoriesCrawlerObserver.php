@@ -4,12 +4,21 @@ namespace App\Services;
 
 use App\Models\AdCategory;
 use App\Models\AdSubcategory;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 use Spatie\Crawler\CrawlObservers\CrawlObserver;
 use Symfony\Component\DomCrawler\Crawler;
 
 class AdsCategoriesCrawlerObserver extends CrawlObserver
 {
-    public function crawled($url, $response, $foundOnUrl = null)
+    /**
+     * Once we have the response parse the body and save the data in a new row in the db
+     *
+     * @param UriInterface $url
+     * @param ResponseInterface $response
+     * @param null $foundOnUrl
+     */
+    public function crawled(UriInterface $url, ResponseInterface $response, $foundOnUrl = null)
     {
         $domCrawler = new Crawler(
             (string)$response->getBody()
