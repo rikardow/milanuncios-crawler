@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function index(Request $request, $search)
+    public function index(Request $request)
     {
+        $search = $request->query('text');
         $category = $request->query('category');
         $freeShipping = $request->boolean('freeShipping');
 

@@ -12,4 +12,4 @@ Auth::routes();
 
 Route::get('/details/{id}', [AdDetailsController::class, 'index'])->name('details');
 
-Route::get('/search/{search}', [SearchController::class, 'index'])->name('search');
+Route::get('/search', [SearchController::class, 'index'])->name('search');

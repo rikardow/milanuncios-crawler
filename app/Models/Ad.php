@@ -13,6 +13,6 @@ class Ad extends Model
 
     public static function getRecent()
     {
-        return self::orderBy('id', 'desc')->take(10)->get();
+        return self::orderBy('id', 'desc')->take(50)->get();
     }
 }
